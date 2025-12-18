@@ -1,30 +1,72 @@
-// Markdown Ordered List Item Converter
-// Given a string representing an ordered list item in Markdown, return the equivalent HTML string.
+// Pangram
+// Given a word or sentence and a string of lowercase letters, determine if the word or sentence uses all the letters from the given set at least once and no other letters.
 
-// A valid ordered list item in Markdown must:
+// Ignore non-alphabetical characters in the word or sentence.
+// Ignore letter casing in the word or sentence.
 
-// Start with zero or more spaces, followed by
-// A number (1 or greater) and a period (.), followed by
-// At least one space, and then
-// The list item text.
-// If the string doesn't have the exact format above, return "Invalid format". Otherwise, wrap the list item text in li tags and return the string.
+function isPangram(sentence, letters) {
+  // console.log(sentence, letters)
+  // word uses all letters
+  const sentSet = new Set();
+  const letSet = new Set();
+  // sanitise
+  const regex = /[a-z]/;
+  letters
+    .toLowerCase()
+    .split('')
+    .forEach((x) => {
+      if (regex.test(x)) {
+        letSet.add(x);
+      }
+    });
+  sentence
+    .toLowerCase()
+    .split('')
+    .forEach((x) => {
+      if (regex.test(x)) {
+        sentSet.add(x);
+      }
+    });
+  console.log(sentSet);
+  console.log(letSet);
 
-// For example, given "1. My item", return "<li>My item</li>".
+  // compare sets using .has();
+  // for (let i = 0; i < letSet.size; i++) {
+  //  sentSet.has(i)
+  //}
 
-// Note: The console may not display HTML tags in strings when logging messages. Check the browser console to see logs with tags included.
-
-function convertListItem(markdown) {
-  console.log(markdown);
-  // zero or more spaces
-  const regex = /\s*\d\.\s+/;
-  if (regex.test(markdown)) {
-    console.log('Hello');
-    console.log(markdown.replace(regex, '<li>'));
-    let test = markdown.replace(regex, '<li>');
-    console.log(test);
-    return test + '</li>';
-  } else {
-    return 'Invalid format';
+  for (const letter of letSet) {
+    if (!sentSet.has(letter)) {
+      return false;
+    }
   }
-  return markdown;
+  for (const letter of sentSet) {
+    if (!letSet.has(letter)) {
+      return false;
+    }
+  }
+  return true;
+  // compare sets....
+  // add them and check same length
+  // console.log(sentSet.size)
+  // const combined = sentSet.add(letSet)
+  // console.log(sentSet.size)
+  // if (combined.size === letSet.size) {
+  //   return true
+  // }
+  //return false
+  // compare arrays...
+  // const sentArr = Array.from(sentSet)
+  // const letArr = Array.from(letSet)
+
+  // helper
+  //function compare(a, b) {
+  //  for (let i = 0; i < a.length; i++) {
+  //    if (a[i] === b[i]) {
+  //      console.log("true")
+  //    }
+  //  }
+  //}
+
+  // return sentence;
 }
